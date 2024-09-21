@@ -2,7 +2,7 @@
 import { Ship } from "../ship";
 
 describe("Ship", () => {
-  const ship = new Ship(3);
+  const ship = new Ship(3, "left");
   it("exists", () => {
     expect(Ship).toBeDefined();
   });

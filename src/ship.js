@@ -1,9 +1,9 @@
 export class Ship {
-  constructor(length) {
+  constructor(length, placement) {
     this.length = length;
     this.hits = 0;
     this.sunk = false;
-    this.placement = null;
+    this.placement = placement;
   }
 
   hit() {
