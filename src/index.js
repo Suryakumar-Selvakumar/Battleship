@@ -1,5 +1,4 @@
-// Importing needed APIs and displayWeather functions
-
+import { Player } from "./player";
 import "./style.css";
 
 const mainContent = document.querySelector(".main-content");
