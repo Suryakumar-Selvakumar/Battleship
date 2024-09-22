@@ -63,11 +63,7 @@ body {
 
 .player-panel {
   grid-area: player-panel;
-}
-
-.grid-cell {
-  border-top: 1px solid black;
-  border-left: 1px solid black;
+  align-self: flex-start;
 }
 
 .grid-cell:nth-child(10n) {
@@ -76,6 +72,20 @@ body {
 
 .grid-cell:nth-last-child(-n + 10) {
   border-bottom: 1px solid black;
+}
+
+.grid-cell {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  font-size: 3rem;
+  text-align: center;
+}
+
+#randomize {
+  padding: 0.5rem 1.5rem;
+  font-size: 1.25rem;
+  outline: none;
+  cursor: pointer;
 }
 
 .computer-side {
