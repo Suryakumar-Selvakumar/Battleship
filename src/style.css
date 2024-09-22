@@ -33,18 +33,74 @@ body {
 
 .player-side {
   grid-area: player-side;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-rows: 1fr min-content 1fr 1fr;
+  grid-template-areas:
+    "."
+    "player-grid"
+    "player-name" "player-panel";
+  place-items: center;
+}
+
+.player-grid {
+  grid-area: player-grid;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(25px, 1fr));
+  width: 600px;
+  height: 600px;
+}
+
+.player-name,
+.computer-name {
+  font-size: 2rem;
+  align-self: start;
+  padding-top: 1rem;
+}
+
+.player-name {
+  grid-area: player-name;
+}
+
+.player-panel {
+  grid-area: player-panel;
+}
+
+.grid-cell {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.grid-cell:nth-child(10n) {
+  border-right: 1px solid black;
+}
+
+.grid-cell:nth-last-child(-n + 10) {
+  border-bottom: 1px solid black;
 }
 
 .computer-side {
   grid-area: computer-side;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-rows: 1fr min-content 1fr 1fr;
+  grid-template-areas:
+    "."
+    "computer-grid"
+    "computer-name" "computer-panel";
+  place-items: center;
+}
+
+.computer-grid {
+  grid-area: computer-grid;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(25px, 1fr));
+  width: 600px;
+  height: 600px;
+}
+
+.computer-name {
+  grid-area: computer-name;
+}
+
+.computer-panel {
+  grid-area: computer-panel;
 }
