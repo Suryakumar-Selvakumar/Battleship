@@ -17,6 +17,4 @@ describe("Display Method", () => {
     expect(gameBoard.board[2][8]).toEqual(expect.any(Ship));
     expect(gameBoard.board[4][2]).toEqual(expect.any(Ship));
   });
-
-  it("displayPlayerBoard")
 });
