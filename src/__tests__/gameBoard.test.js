@@ -59,13 +59,25 @@ describe("Gameboard", () => {
     expect(gameBoard.board[8][3]).toEqual(expect.any(Ship));
   });
 
-  it("refuses to place ships when adj. coordinates aren't available", () => {
+  it("changes placement of ship if adj. coordinates aren't available (ex-1)", () => {
     gameBoard.placeShip(2, [0, 0], "left");
     expect(gameBoard.board[0][0]).toEqual(expect.any(Ship));
   });
 
-  it("refuses to place ships when adj. coordinates aren't available", () => {
+  it("changes placement of ship if adj. coordinates aren't available (ex-2)", () => {
     gameBoard.placeShip(2, [9, 9], "right");
     expect(gameBoard.board[0][0]).toEqual(expect.any(Ship));
+  });
+
+  it("returns coordinates that work in placeShip", () => {
+    const newShipDetails = gameBoard.randomCoords(3);
+    gameBoard.placeShip(
+      newShipDetails.shipLength,
+      newShipDetails.coord,
+      newShipDetails.placement
+    );
+    expect(
+      gameBoard.board[newShipDetails.coord[0]][newShipDetails.coord[1]]
+    ).toEqual(expect.any(Ship));
   });
 });

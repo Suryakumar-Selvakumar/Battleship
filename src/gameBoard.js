@@ -1,5 +1,5 @@
 import { Ship } from "./ship";
-
+import { randomize } from "./helper";
 export class Gameboard {
   constructor() {
     this.board = [
@@ -17,46 +17,76 @@ export class Gameboard {
   }
 
   placeShip(shipLength, coord, placement) {
-    let count = 0;
+    const coordRow = coord[0],
+      coordCol = coord[1];
     for (let i = 0; i < shipLength; i++) {
       if (placement === "left") {
-        if (
-          this.board[coord[0]][coord[1] - i] === null &&
-          this.board[coord[0]][coord[1] - i] !== undefined
-        )
-          count++;
+        this.board[coordRow][coordCol - i] = new Ship(shipLength, placement);
       } else if (placement === "right") {
-        if (
-          this.board[coord[0]][coord[1] + i] === null &&
-          this.board[coord[0]][coord[1] + i] !== undefined
-        )
-          count++;
+        this.board[coordRow][coordCol + i] = new Ship(shipLength, placement);
       } else if (placement === "top") {
-        if (
-          this.board[coord[0] - i][coord[1]] === null &&
-          this.board[coord[0] - i][coord[1]] !== undefined
-        )
-          count++;
+        this.board[coordRow - i][coordCol] = new Ship(shipLength, placement);
       } else if (placement === "bottom") {
-        if (
-          this.board[coord[0] - i][coord[1]] === null &&
-          this.board[coord[0] - i][coord[1]] !== undefined
-        )
-          count++;
+        this.board[coordRow + i][coordCol] = new Ship(shipLength, placement);
       }
     }
+  }
+
+  randomCoords(shipLength) {
+    const choices = ["left", "right", "top", "bottom"];
+    let coordRow = Math.floor(Math.random() * 9),
+      choice = Math.floor(Math.random() * 4),
+      coordCol = Math.floor(Math.random() * 9),
+      countUndefCheck = 0,
+      countNullCheck = 0,
+      placement = choices[choice];
     for (let i = 0; i < shipLength; i++) {
-      if (count === shipLength) {
-        if (placement === "left") {
-          this.board[coord[0]][coord[1] - i] = new Ship(shipLength, placement);
-        } else if (placement === "right") {
-          this.board[coord[0]][coord[1] + i] = new Ship(shipLength, placement);
-        } else if (placement === "top") {
-          this.board[coord[0] - i][coord[1]] = new Ship(shipLength, placement);
-        } else if (placement === "bottom") {
-          this.board[coord[0] + i][coord[1]] = new Ship(shipLength, placement);
+      if (placement === "left" && coordCol - i >= 0) {
+        countUndefCheck++;
+      } else if (placement === "right" && coordCol + i <= 9) {
+        countUndefCheck++;
+      } else if (placement === "top" && coordRow - i >= 0) {
+        countUndefCheck++;
+      } else if (placement === "bottom" && coordRow + i <= 9) {
+        countUndefCheck++;
+      }
+    }
+
+    for (let i = 0; i < shipLength; i++) {
+      if (countUndefCheck === shipLength) {
+        if (
+          placement === "left" &&
+          this.board[coordRow][coordCol - i] === null
+        ) {
+          countNullCheck++;
+        } else if (
+          placement === "right" &&
+          this.board[coordRow][coordCol + i] === null
+        ) {
+          countNullCheck++;
+        } else if (
+          placement === "top" &&
+          this.board[coordRow - i][coordCol] === null
+        ) {
+          countNullCheck++;
+        } else if (
+          placement === "bottom" &&
+          this.board[coordRow + i][coordCol] === null
+        ) {
+          countNullCheck++;
         }
       }
+    }
+
+    if (countNullCheck === shipLength) {
+      return {
+        coord: [coordRow, coordCol],
+        placement: placement,
+        shipLength: shipLength,
+      };
+    } else {
+      placement = randomize(placement);
+      this.randomCoords(shipLength);
     }
   }
 }
