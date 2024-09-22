@@ -14,20 +14,23 @@ export class Gameboard {
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
     ];
+    this.shipCoordsArr = [];
   }
 
   placeShip(shipLength, coord, placement) {
+    this.shipCoordsArr.push(coord);
     const coordRow = coord[0],
-      coordCol = coord[1];
+      coordCol = coord[1],
+      ship = new Ship(shipLength, placement);
     for (let i = 0; i < shipLength; i++) {
       if (placement === "left") {
-        this.board[coordRow][coordCol - i] = new Ship(shipLength, placement);
+        this.board[coordRow][coordCol - i] = ship;
       } else if (placement === "right") {
-        this.board[coordRow][coordCol + i] = new Ship(shipLength, placement);
+        this.board[coordRow][coordCol + i] = ship;
       } else if (placement === "top") {
-        this.board[coordRow - i][coordCol] = new Ship(shipLength, placement);
+        this.board[coordRow - i][coordCol] = ship;
       } else if (placement === "bottom") {
-        this.board[coordRow + i][coordCol] = new Ship(shipLength, placement);
+        this.board[coordRow + i][coordCol] = ship;
       }
     }
   }
@@ -88,5 +91,31 @@ export class Gameboard {
       placement = randomize(placement);
       this.randomCoords(shipLength);
     }
+  }
+
+  receiveAttack(coord) {
+    if (
+      typeof this.board[coord[0]][coord[1]] === "object" &&
+      this.board[coord[0]][coord[1]] !== null
+    ) {
+      this.board[coord[0]][coord[1]].hit();
+      return true;
+    } else {
+      this.board[coord[0]][coord[1]] = "miss";
+      return false;
+    }
+  }
+
+  isAllSunk() {
+    let count = 0;
+    this.shipCoordsArr.forEach((coord) => {
+      if (this.board[coord[0]][coord[1]].isSunk()) {
+        count++;
+      }
+    });
+    if(count === this.shipCoordsArr.length){
+      return true;
+    }
+    return false;
   }
 }
