@@ -43,6 +43,7 @@ export class Gameboard {
       coordCol = Math.floor(Math.random() * 10),
       countUndefCheck = 0,
       countNullCheck = 0,
+      countDiagCheck = 0,
       placement = choices[choice];
     for (let i = 0; i < shipLength; i++) {
       if (placement === "left" && coordCol - i >= 0) {
@@ -82,7 +83,44 @@ export class Gameboard {
       }
     }
 
-    if (countNullCheck === shipLength) {
+    for (let i = 0; i < shipLength; i++) {
+      if (countNullCheck === shipLength) {
+        if (
+          coordCol - i >= 0 &&
+          coordCol + i <= 9 &&
+          coordRow - i >= 0 &&
+          coordRow + i <= 9
+        ) {
+          if (
+            placement === "left" &&
+            this.board[coordRow - i][coordCol + i] === null &&
+            this.board[coordRow + i][coordCol + i] === null
+          ) {
+            countDiagCheck++;
+          } else if (
+            placement === "right" &&
+            this.board[coordRow - i][coordCol - i] === null &&
+            this.board[coordRow + i][coordCol - i] === null
+          ) {
+            countDiagCheck++;
+          } else if (
+            placement === "top" &&
+            this.board[coordRow - i][coordCol - i] === null &&
+            this.board[coordRow - i][coordCol + i] === null
+          ) {
+            countDiagCheck++;
+          } else if (
+            placement === "bottom" &&
+            this.board[coordRow + i][coordCol - i] === null &&
+            this.board[coordRow + i][coordCol + i] === null
+          ) {
+            countDiagCheck++;
+          }
+        }
+      }
+    }
+
+    if (countDiagCheck === shipLength) {
       return {
         coord: [coordRow, coordCol],
         placement: placement,
@@ -110,6 +148,7 @@ export class Gameboard {
 
   isAllSunk() {
     let count = 0;
+    console.log(this.shipCoordsArr);
     this.shipCoordsArr.forEach((coord) => {
       if (this.board[coord[0]][coord[1]].isSunk()) {
         count++;

@@ -3,7 +3,6 @@ import "./style.css";
 import {
   displayComputerBoard,
   displayPlayerBoard,
-  generateRandomShip,
   populateComputerBoard,
   populateHumanBoard,
   populateRandomShips,
@@ -49,8 +48,18 @@ populateComputerBoard(computer.gameBoard);
 
 const displayPara = document.querySelector("#display-para");
 
+const randomize = document.getElementById("randomize");
+randomize.addEventListener("click", () => {
+  populateRandomShips(human.gameBoard);
+  displayPlayerBoard(humanBoard, human.gameBoard.board);
+  populateRandomShips(computer.gameBoard);
+  displayComputerBoard(computerBoard, computer.gameBoard.board);
+  console.log(computer.gameBoard.shipCoordsArr);
+});
+
 computerBoard.addEventListener("click", (event) => {
   if (event.target.tagName === "DIV") {
+    randomize.style.cssText = "display: none;";
     let dataChosen = event.target.getAttribute("chosen");
     if (dataChosen === "false") {
       if (!human.gameBoard.isAllSunk() && !computer.gameBoard.isAllSunk()) {
@@ -74,10 +83,4 @@ computerBoard.addEventListener("click", (event) => {
       }
     }
   }
-});
-
-const randomize = document.getElementById("randomize");
-randomize.addEventListener("click", () => {
-  populateRandomShips(human.gameBoard);
-  displayPlayerBoard(humanBoard, human.gameBoard.board);
 });

@@ -156,6 +156,9 @@ function populateRandomShips(playerGameBoardObj) {
       playerGameBoardObj.board[i][j] = null;
     }
   }
+
+  playerGameBoardObj.shipCoordsArr = [];
+
   generateRandomShip(playerGameBoardObj, 4);
   generateRandomShip(playerGameBoardObj, 3);
   generateRandomShip(playerGameBoardObj, 3);
