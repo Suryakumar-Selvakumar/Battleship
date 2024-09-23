@@ -28,6 +28,7 @@ function populateComputerBoard(computerGameBoard) {
 
 function displayPlayerBoard(playerGrid, playerGameBoard) {
   for (const cell of playerGrid.children) {
+    cell.style.cssText = "background-color: white;";
     const cellRow = cell.getAttribute("data-row");
     const cellColumn = cell.getAttribute("data-column");
     const cellHit = cell.getAttribute("hit");
@@ -90,40 +91,6 @@ function registerHumanPlay(computerGameBoardObj, dataRow, dataColumn, cell) {
   }
 }
 
-// function registerComputerPlay(
-//   playerGameBoardObj,
-//   playerVisitedArr,
-//   playerGrid
-// ) {
-//   let q = [];
-//   const coordRow = Math.floor(Math.random() * 10),
-//     coordCol = Math.floor(Math.random() * 10);
-
-//   q.push([coordRow, coordCol]);
-
-//   while (q.length) {
-//     const curr = q.shift();
-//     if (!playerVisitedArr[curr[0]][curr[1]]) {
-//       for (const cell of playerGrid.children) {
-//         const cellRow = cell.getAttribute("data-row");
-//         const cellColumn = cell.getAttribute("data-column");
-//         if (curr[0] == cellRow && curr[1] == cellColumn) {
-//           if (playerGameBoardObj.receiveAttack([curr[0], curr[1]])) {
-//             cell.setAttribute("hit", true);
-//             return;
-//           }
-//         }
-//       }
-//       playerVisitedArr[curr[0]][curr[1]] = true;
-//     } else {
-//       q.push([Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]);
-//     }
-//   }
-//   // else {
-//   //   registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
-//   // }
-// }
-
 function registerComputerPlay(
   playerGameBoardObj,
   playerVisitedArr,
@@ -169,6 +136,38 @@ function registerComputerPlay(
   registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
 }
 
+function generateRandomShip(playerGameBoardObj, shipLength) {
+  while (true) {
+    const newShipDetails = playerGameBoardObj.randomCoords(shipLength);
+    if (newShipDetails) {
+      playerGameBoardObj.placeShip(
+        newShipDetails.shipLength,
+        newShipDetails.coord,
+        newShipDetails.placement
+      );
+      break;
+    }
+  }
+}
+
+function populateRandomShips(playerGameBoardObj) {
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      playerGameBoardObj.board[i][j] = null;
+    }
+  }
+  generateRandomShip(playerGameBoardObj, 4);
+  generateRandomShip(playerGameBoardObj, 3);
+  generateRandomShip(playerGameBoardObj, 3);
+  generateRandomShip(playerGameBoardObj, 2);
+  generateRandomShip(playerGameBoardObj, 2);
+  generateRandomShip(playerGameBoardObj, 2);
+  generateRandomShip(playerGameBoardObj, 1);
+  generateRandomShip(playerGameBoardObj, 1);
+  generateRandomShip(playerGameBoardObj, 1);
+  generateRandomShip(playerGameBoardObj, 1);
+}
+
 export {
   displayPlayerBoard,
   populateHumanBoard,
@@ -176,4 +175,5 @@ export {
   displayComputerBoard,
   registerHumanPlay,
   registerComputerPlay,
+  populateRandomShips,
 };

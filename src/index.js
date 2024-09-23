@@ -3,8 +3,10 @@ import "./style.css";
 import {
   displayComputerBoard,
   displayPlayerBoard,
+  generateRandomShip,
   populateComputerBoard,
   populateHumanBoard,
+  populateRandomShips,
   registerComputerPlay,
   registerHumanPlay,
 } from "./displayMethods";
@@ -72,4 +74,10 @@ computerBoard.addEventListener("click", (event) => {
       }
     }
   }
+});
+
+const randomize = document.getElementById("randomize");
+randomize.addEventListener("click", () => {
+  populateRandomShips(human.gameBoard);
+  displayPlayerBoard(humanBoard, human.gameBoard.board);
 });

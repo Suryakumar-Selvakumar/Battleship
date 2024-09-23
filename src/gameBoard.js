@@ -88,10 +88,10 @@ export class Gameboard {
         placement: placement,
         shipLength: shipLength,
       };
-    } else {
-      placement = randomize(placement);
-      this.randomCoords(shipLength);
     }
+
+    placement = randomize(placement);
+    this.randomCoords(shipLength);
   }
 
   receiveAttack(coord) {

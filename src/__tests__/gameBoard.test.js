@@ -35,7 +35,7 @@ describe("Gameboard", () => {
   });
 
   it.skip("returns coordinates that work in placeShip", () => {
-    const newShipDetails = gameBoard.randomCoords(5);
+    const newShipDetails = gameBoard.randomCoords(4);
     gameBoard.placeShip(
       newShipDetails.shipLength,
       newShipDetails.coord,
