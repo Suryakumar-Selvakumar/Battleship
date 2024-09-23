@@ -1,4 +1,4 @@
-function populateGameBoard(playerGameBoard) {
+function populateHumanBoard(playerGameBoard) {
   playerGameBoard.placeShip(4, [5, 5], "top");
   playerGameBoard.placeShip(3, [0, 9], "left");
   playerGameBoard.placeShip(3, [8, 2], "right");
@@ -9,6 +9,19 @@ function populateGameBoard(playerGameBoard) {
   playerGameBoard.placeShip(1, [9, 0], "right");
   playerGameBoard.placeShip(1, [2, 8], "left");
   playerGameBoard.placeShip(1, [4, 2], "left");
+}
+
+function populateComputerBoard(computerGameBoard) {
+  computerGameBoard.placeShip(4, [0, 0], "bottom");
+  computerGameBoard.placeShip(3, [2, 9], "left");
+  computerGameBoard.placeShip(3, [3, 4], "bottom");
+  computerGameBoard.placeShip(2, [7, 1], "right");
+  computerGameBoard.placeShip(2, [8, 6], "right");
+  computerGameBoard.placeShip(2, [6, 8], "top");
+  computerGameBoard.placeShip(1, [1, 5], "left");
+  computerGameBoard.placeShip(1, [9, 2], "left");
+  computerGameBoard.placeShip(1, [2, 2], "left");
+  computerGameBoard.placeShip(1, [4, 6], "left");
 }
 
 function displayPlayerBoard(playerGrid, playerGameBoard) {
@@ -30,9 +43,14 @@ function displayPlayerBoard(playerGrid, playerGameBoard) {
       // Add a fire/blast image later and background: lightred
       cell.textContent = "X";
     }
-    if (playerGameBoard[cellRow][cellColumn] !== null && playerGameBoard[cellRow][cellColumn].isSunk()) {
-        // Make background dark red and add ship with X mark SVG
-      }
+    if (
+      playerGameBoard[cellRow][cellColumn] !== null &&
+      typeof playerGameBoard[cellRow][cellColumn] === "object" &&
+      playerGameBoard[cellRow][cellColumn].isSunk()
+    ) {
+      // Make background dark red and add ship with X mark SVG
+      cell.style.cssText = "background-color: darkred";
+    }
   }
 }
 
@@ -52,10 +70,20 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
       // Add a dot image later and background lightgrey
       cell.style.cssText = "background-color:grey;";
     }
-    if (computerGameBoard[cellRow][cellColumn] !== null && computerGameBoard[cellRow][cellColumn].isSunk()) {
+    if (
+      computerGameBoard[cellRow][cellColumn] !== null &&
+      typeof computerGameBoard[cellRow][cellColumn] === "object" &&
+      computerGameBoard[cellRow][cellColumn].isSunk()
+    ) {
       // Make background dark red and add ship with X mark SVG
+      cell.style.cssText = "background-color: darkred";
     }
   }
 }
 
-export { displayPlayerBoard, populateGameBoard, displayComputerBoard };
+export {
+  displayPlayerBoard,
+  populateHumanBoard,
+  populateComputerBoard,
+  displayComputerBoard,
+};

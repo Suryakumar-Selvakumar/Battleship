@@ -1,6 +1,11 @@
 import { Player } from "./player";
 import "./style.css";
-import { displayPlayerBoard, populateGameBoard } from "./displayMethods";
+import {
+  displayComputerBoard,
+  displayPlayerBoard,
+  populateComputerBoard,
+  populateHumanBoard,
+} from "./displayMethods";
 
 const human = new Player("human");
 const computer = new Player("computer");
@@ -30,7 +35,8 @@ for (let i = 0; i < computer.gameBoard.board.length; i++) {
   }
 }
 
-populateGameBoard(human.gameBoard);
+populateHumanBoard(human.gameBoard);
 displayPlayerBoard(humanBoard, human.gameBoard.board);
 
-// populateGameBoard(computer);
+populateComputerBoard(computer.gameBoard);
+displayComputerBoard(computerBoard, computer.gameBoard.board);
