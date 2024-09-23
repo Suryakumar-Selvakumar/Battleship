@@ -59,13 +59,14 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
     const cellRow = cell.getAttribute("data-row");
     const cellColumn = cell.getAttribute("data-column");
     const cellHit = cell.getAttribute("hit");
+    console.log(cellHit);
     if (
       typeof computerGameBoard[cellRow][cellColumn] === "object" &&
       computerGameBoard[cellRow][cellColumn] !== null &&
-      cellHit === true
+      cellHit === "true"
     ) {
       // Add a fire/blast image later and background: lightred
-      cell.textContent = "X";
+      cell.style.cssText = "background-color:red;";
     } else if (computerGameBoard[cellRow][cellColumn] === "miss") {
       // Add a dot image later and background lightgrey
       cell.style.cssText = "background-color:grey;";
@@ -81,9 +82,16 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
   }
 }
 
+function registerHumanPlay(computerGameBoard, dataRow, dataColumn, cell) {
+  if (computerGameBoard.receiveAttack([dataRow, dataColumn])) {
+    cell.setAttribute("hit", true);
+  }
+}
+
 export {
   displayPlayerBoard,
   populateHumanBoard,
   populateComputerBoard,
   displayComputerBoard,
+  registerHumanPlay,
 };
