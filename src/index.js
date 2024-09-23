@@ -5,6 +5,7 @@ import {
   displayPlayerBoard,
   populateComputerBoard,
   populateHumanBoard,
+  registerComputerPlay,
   registerHumanPlay,
 } from "./displayMethods";
 
@@ -21,6 +22,7 @@ for (let i = 0; i < human.gameBoard.board.length; i++) {
     div.setAttribute("data-row", i);
     div.setAttribute("data-column", j);
     div.setAttribute("hit", false);
+    div.setAttribute("chosen", false);
     humanBoard.appendChild(div);
   }
 }
@@ -32,6 +34,7 @@ for (let i = 0; i < computer.gameBoard.board.length; i++) {
     div.setAttribute("data-row", i);
     div.setAttribute("data-column", j);
     div.setAttribute("hit", false);
+    div.setAttribute("chosen", false);
     computerBoard.appendChild(div);
   }
 }
@@ -46,17 +49,27 @@ const displayPara = document.querySelector("#display-para");
 
 computerBoard.addEventListener("click", (event) => {
   if (event.target.tagName === "DIV") {
-    if (!human.gameBoard.isAllSunk() && !computer.gameBoard.isAllSunk()) {
-      const dataRow = event.target.getAttribute("data-row");
-      const dataColumn = event.target.getAttribute("data-column");
-      // let dataHit = event.target.getAttribute("hit");
-      registerHumanPlay(computer.gameBoard, dataRow, dataColumn, event.target);
-      displayComputerBoard(computerBoard, computer.gameBoard.board);
-    } else {
-      if (human.gameBoard.isAllSunk()) {
-        displayPara.textContent = "Computer wins the game";
-      } else if (computer.gameBoard.isAllSunk()) {
-        displayPara.textContent = "Player wins the game";
+    let dataChosen = event.target.getAttribute("chosen");
+    if (dataChosen === "false") {
+      if (!human.gameBoard.isAllSunk() && !computer.gameBoard.isAllSunk()) {
+        const dataRow = event.target.getAttribute("data-row");
+        const dataColumn = event.target.getAttribute("data-column");
+
+        registerHumanPlay(
+          computer.gameBoard,
+          dataRow,
+          dataColumn,
+          event.target
+        );
+        displayComputerBoard(computerBoard, computer.gameBoard.board);
+        registerComputerPlay(human.gameBoard, human.visitedArr, humanBoard);
+        displayPlayerBoard(humanBoard, human.gameBoard.board);
+      } else {
+        if (human.gameBoard.isAllSunk()) {
+          displayPara.textContent = "Computer wins the game";
+        } else if (computer.gameBoard.isAllSunk()) {
+          displayPara.textContent = "Player wins the game";
+        }
       }
     }
   }

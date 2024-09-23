@@ -33,15 +33,15 @@ function displayPlayerBoard(playerGrid, playerGameBoard) {
       typeof playerGameBoard[cellRow][cellColumn] === "object" &&
       playerGameBoard[cellRow][cellColumn] !== null
     ) {
-      // Add code to display the ship image and background:lightblue
+      // Add background:lightblue later
       cell.style.cssText = "background-color:blue;";
+      if (cellHit === "true") {
+        // Add a fire/blast image later and background: lightred
+        cell.style.cssText = "background-color:red;";
+      }
     } else if (playerGameBoard[cellRow][cellColumn] === "miss") {
       // Add a dot image later and background lightgrey
       cell.style.cssText = "background-color:grey;";
-    }
-    if (cellHit === true) {
-      // Add a fire/blast image later and background: lightred
-      cell.textContent = "X";
     }
     if (
       playerGameBoard[cellRow][cellColumn] !== null &&
@@ -59,7 +59,6 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
     const cellRow = cell.getAttribute("data-row");
     const cellColumn = cell.getAttribute("data-column");
     const cellHit = cell.getAttribute("hit");
-    console.log(cellHit);
     if (
       typeof computerGameBoard[cellRow][cellColumn] === "object" &&
       computerGameBoard[cellRow][cellColumn] !== null &&
@@ -82,9 +81,35 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
   }
 }
 
-function registerHumanPlay(computerGameBoard, dataRow, dataColumn, cell) {
-  if (computerGameBoard.receiveAttack([dataRow, dataColumn])) {
+function registerHumanPlay(computerGameBoardObj, dataRow, dataColumn, cell) {
+  cell.setAttribute("chosen", true);
+  if (computerGameBoardObj.receiveAttack([dataRow, dataColumn])) {
     cell.setAttribute("hit", true);
+  }
+}
+
+function registerComputerPlay(
+  playerGameBoardObj,
+  playerVisitedArr,
+  playerGrid
+) {
+  const coordRow = Math.floor(Math.random() * 9),
+    coordCol = Math.floor(Math.random() * 9);
+
+  if (!playerVisitedArr[coordRow][coordCol]) {
+    for (const cell of playerGrid.children) {
+      const cellRow = cell.getAttribute("data-row");
+      const cellColumn = cell.getAttribute("data-column");
+      if (coordRow == cellRow && coordCol == cellColumn) {
+        if (playerGameBoardObj.receiveAttack([coordRow, coordCol])) {
+          cell.setAttribute("hit", true);
+        }
+      }
+    }
+    playerVisitedArr[coordRow][coordCol] = true;
+    return;
+  } else {
+    registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
   }
 }
 
@@ -94,4 +119,5 @@ export {
   populateComputerBoard,
   displayComputerBoard,
   registerHumanPlay,
+  registerComputerPlay,
 };
