@@ -1,3 +1,5 @@
+import { returnAdjCell } from "./helper";
+
 function populateHumanBoard(playerGameBoard) {
   playerGameBoard.placeShip(4, [5, 5], "top");
   playerGameBoard.placeShip(3, [0, 9], "left");
@@ -129,8 +131,29 @@ function registerComputerPlay(
 ) {
   const coordRow = Math.floor(Math.random() * 10),
     coordCol = Math.floor(Math.random() * 10);
-  console.log(playerGameBoardObj.shipsFoundArr);
-  if (!playerVisitedArr[coordRow][coordCol]) {
+  const shipCoord = playerGameBoardObj.shipsFoundArr.shift();
+  const adjCoord = returnAdjCell(shipCoord);
+  if (
+    adjCoord &&
+    adjCoord[0] >= 0 &&
+    adjCoord[0] <= 9 &&
+    adjCoord[1] >= 0 &&
+    adjCoord[1] <= 9
+  ) {
+    if (!playerVisitedArr[adjCoord[0]][adjCoord[1]]) {
+      for (const cell of playerGrid.children) {
+        const cellRow = cell.getAttribute("data-row");
+        const cellColumn = cell.getAttribute("data-column");
+        if (adjCoord[0] == cellRow && adjCoord[1] == cellColumn) {
+          if (playerGameBoardObj.receiveAttack([adjCoord[0], adjCoord[1]])) {
+            cell.setAttribute("hit", true);
+          }
+        }
+      }
+      playerVisitedArr[adjCoord[0]][adjCoord[1]] = true;
+      return;
+    }
+  } else if (!playerVisitedArr[coordRow][coordCol]) {
     for (const cell of playerGrid.children) {
       const cellRow = cell.getAttribute("data-row");
       const cellColumn = cell.getAttribute("data-column");
@@ -142,10 +165,8 @@ function registerComputerPlay(
     }
     playerVisitedArr[coordRow][coordCol] = true;
     return;
-  } else {
-    registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
   }
-  console.log(playerGameBoardObj);
+  registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
 }
 
 export {

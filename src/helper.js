@@ -5,4 +5,17 @@ function randomize(placement) {
   return randomize(placement);
 }
 
-export { randomize };
+function returnAdjCell(shipCoord) {
+  if (shipCoord) {
+    const choices = [
+      [shipCoord[0], shipCoord[1] - 1],
+      [shipCoord[0], shipCoord[1] + 1],
+      [shipCoord[0] - 1, shipCoord[1]],
+      [shipCoord[0] + 1, shipCoord[1]],
+    ];
+    let choice = Math.floor(Math.random() * 4);
+    return choices[choice];
+  } else return undefined;
+}
+
+export { randomize, returnAdjCell };
