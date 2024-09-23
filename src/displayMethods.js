@@ -88,14 +88,48 @@ function registerHumanPlay(computerGameBoardObj, dataRow, dataColumn, cell) {
   }
 }
 
+// function registerComputerPlay(
+//   playerGameBoardObj,
+//   playerVisitedArr,
+//   playerGrid
+// ) {
+//   let q = [];
+//   const coordRow = Math.floor(Math.random() * 10),
+//     coordCol = Math.floor(Math.random() * 10);
+
+//   q.push([coordRow, coordCol]);
+
+//   while (q.length) {
+//     const curr = q.shift();
+//     if (!playerVisitedArr[curr[0]][curr[1]]) {
+//       for (const cell of playerGrid.children) {
+//         const cellRow = cell.getAttribute("data-row");
+//         const cellColumn = cell.getAttribute("data-column");
+//         if (curr[0] == cellRow && curr[1] == cellColumn) {
+//           if (playerGameBoardObj.receiveAttack([curr[0], curr[1]])) {
+//             cell.setAttribute("hit", true);
+//             return;
+//           }
+//         }
+//       }
+//       playerVisitedArr[curr[0]][curr[1]] = true;
+//     } else {
+//       q.push([Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]);
+//     }
+//   }
+//   // else {
+//   //   registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
+//   // }
+// }
+
 function registerComputerPlay(
   playerGameBoardObj,
   playerVisitedArr,
   playerGrid
 ) {
-  const coordRow = Math.floor(Math.random() * 9),
-    coordCol = Math.floor(Math.random() * 9);
-
+  const coordRow = Math.floor(Math.random() * 10),
+    coordCol = Math.floor(Math.random() * 10);
+  console.log(playerGameBoardObj.shipsFoundArr);
   if (!playerVisitedArr[coordRow][coordCol]) {
     for (const cell of playerGrid.children) {
       const cellRow = cell.getAttribute("data-row");
@@ -111,6 +145,7 @@ function registerComputerPlay(
   } else {
     registerComputerPlay(playerGameBoardObj, playerVisitedArr, playerGrid);
   }
+  console.log(playerGameBoardObj);
 }
 
 export {

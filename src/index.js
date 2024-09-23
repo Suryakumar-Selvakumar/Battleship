@@ -64,7 +64,6 @@ computerBoard.addEventListener("click", (event) => {
         displayComputerBoard(computerBoard, computer.gameBoard.board);
         registerComputerPlay(human.gameBoard, human.visitedArr, humanBoard);
         displayPlayerBoard(humanBoard, human.gameBoard.board);
-      } else {
         if (human.gameBoard.isAllSunk()) {
           displayPara.textContent = "Computer wins the game";
         } else if (computer.gameBoard.isAllSunk()) {

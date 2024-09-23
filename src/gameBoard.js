@@ -15,6 +15,7 @@ export class Gameboard {
       [null, null, null, null, null, null, null, null, null, null],
     ];
     this.shipCoordsArr = [];
+    this.shipsFoundArr = [];
   }
 
   placeShip(shipLength, coord, placement) {
@@ -37,9 +38,9 @@ export class Gameboard {
 
   randomCoords(shipLength) {
     const choices = ["left", "right", "top", "bottom"];
-    let coordRow = Math.floor(Math.random() * 9),
+    let coordRow = Math.floor(Math.random() * 10),
       choice = Math.floor(Math.random() * 4),
-      coordCol = Math.floor(Math.random() * 9),
+      coordCol = Math.floor(Math.random() * 10),
       countUndefCheck = 0,
       countNullCheck = 0,
       placement = choices[choice];
@@ -99,6 +100,7 @@ export class Gameboard {
       this.board[coord[0]][coord[1]] !== null
     ) {
       this.board[coord[0]][coord[1]].hit();
+      this.shipsFoundArr.push([coord[0], coord[1]]);
       return true;
     } else {
       this.board[coord[0]][coord[1]] = "miss";
@@ -113,7 +115,7 @@ export class Gameboard {
         count++;
       }
     });
-    if(count === this.shipCoordsArr.length){
+    if (count === this.shipCoordsArr.length) {
       return true;
     }
     return false;
