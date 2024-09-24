@@ -44,7 +44,7 @@ populateHumanBoard(human.gameBoard);
 displayPlayerBoard(humanBoard, human.gameBoard.board);
 
 populateComputerBoard(computer.gameBoard);
-// displayComputerBoard(computerBoard, computer.gameBoard.board);
+displayComputerBoard(computerBoard, computer.gameBoard.board);
 
 const displayPara = document.querySelector("#display-para");
 
@@ -54,7 +54,6 @@ randomize.addEventListener("click", () => {
   displayPlayerBoard(humanBoard, human.gameBoard.board);
   populateRandomShips(computer.gameBoard);
   displayComputerBoard(computerBoard, computer.gameBoard.board);
-  console.log(computer.gameBoard.shipCoordsArr);
 });
 
 computerBoard.addEventListener("click", (event) => {

@@ -148,7 +148,6 @@ export class Gameboard {
 
   isAllSunk() {
     let count = 0;
-    console.log(this.shipCoordsArr);
     this.shipCoordsArr.forEach((coord) => {
       if (this.board[coord[0]][coord[1]].isSunk()) {
         count++;

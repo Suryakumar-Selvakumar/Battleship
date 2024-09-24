@@ -1,4 +1,11 @@
 import { returnAdjCell } from "./helper";
+import fire from "./icons/fire.svg";
+import destroyer from "./icons/destroyer.svg";
+import dot from "./icons/circle.svg";
+import x from "./icons/alpha-x.svg";
+import battleship from "./icons/battleship.svg";
+import submarine from "./icons/submarine.svg";
+import boat from "./icons/boat.svg";
 
 function populateHumanBoard(playerGameBoard) {
   playerGameBoard.placeShip(4, [5, 5], "top");
@@ -26,6 +33,10 @@ function populateComputerBoard(computerGameBoard) {
   computerGameBoard.placeShip(1, [4, 6], "left");
 }
 
+const fireIcon = new Image();
+fireIcon.src = fire;
+fireIcon.classList.add("icons");
+
 function displayPlayerBoard(playerGrid, playerGameBoard) {
   for (const cell of playerGrid.children) {
     cell.style.cssText = "background-color: white;";
@@ -36,23 +47,56 @@ function displayPlayerBoard(playerGrid, playerGameBoard) {
       typeof playerGameBoard[cellRow][cellColumn] === "object" &&
       playerGameBoard[cellRow][cellColumn] !== null
     ) {
-      // Add background:lightblue later
-      cell.style.cssText = "background-color:blue;";
+      cell.style.cssText = "background-color:rgb(0, 106, 255);";
+      cell.innerHTML = "";
+      if (playerGameBoard[cellRow][cellColumn].length == 4) {
+        const battleshipIcon = new Image();
+        battleshipIcon.src = battleship;
+        battleshipIcon.classList.add("icons");
+        cell.appendChild(battleshipIcon);
+      } else if (playerGameBoard[cellRow][cellColumn].length == 3) {
+        const destroyerIcon = new Image();
+        destroyerIcon.src = destroyer;
+        destroyerIcon.classList.add("icons");
+        cell.appendChild(destroyerIcon);
+      } else if (playerGameBoard[cellRow][cellColumn].length == 2) {
+        const submarineIcon = new Image();
+        submarineIcon.src = submarine;
+        submarineIcon.classList.add("icons");
+        cell.appendChild(submarineIcon);
+      } else {
+        const boatIcon = new Image();
+        boatIcon.src = boat;
+        boatIcon.classList.add("icons");
+        cell.appendChild(boatIcon);
+      }
       if (cellHit === "true") {
-        // Add a fire/blast image later and background: lightred
-        cell.style.cssText = "background-color:red;";
+        cell.style.cssText = "background-color: red;";
+        cell.innerHTML = "";
+        const fireIcon = new Image();
+        fireIcon.src = fire;
+        fireIcon.classList.add("icons");
+        cell.appendChild(fireIcon);
       }
     } else if (playerGameBoard[cellRow][cellColumn] === "miss") {
-      // Add a dot image later and background lightgrey
-      cell.style.cssText = "background-color:grey;";
+      cell.style.cssText = "background-color:rgb(255, 249, 208);";
+      cell.innerHTML = "";
+      const dotIcon = new Image();
+      dotIcon.src = dot;
+      dotIcon.classList.add("icons");
+      cell.appendChild(dotIcon);
     }
     if (
       playerGameBoard[cellRow][cellColumn] !== null &&
       typeof playerGameBoard[cellRow][cellColumn] === "object" &&
       playerGameBoard[cellRow][cellColumn].isSunk()
     ) {
-      // Make background dark red and add ship with X mark SVG
       cell.style.cssText = "background-color: darkred";
+      cell.innerHTML = "";
+      const explosionIcon = new Image();
+      explosionIcon.src = x;
+      explosionIcon.classList.add("icons");
+      cell.appendChild(explosionIcon);
     }
   }
 }
@@ -67,19 +111,31 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
       computerGameBoard[cellRow][cellColumn] !== null &&
       cellHit === "true"
     ) {
-      // Add a fire/blast image later and background: lightred
-      cell.style.cssText = "background-color:red;";
+      cell.style.cssText = "background-color: red;";
+      cell.innerHTML = "";
+      const fireIcon = new Image();
+      fireIcon.src = fire;
+      fireIcon.classList.add("icons");
+      cell.appendChild(fireIcon);
     } else if (computerGameBoard[cellRow][cellColumn] === "miss") {
-      // Add a dot image later and background lightgrey
-      cell.style.cssText = "background-color:grey;";
+      cell.style.cssText = "background-color:rgb(255, 249, 208);";
+      cell.innerHTML = "";
+      const dotIcon = new Image();
+      dotIcon.src = dot;
+      dotIcon.classList.add("icons");
+      cell.appendChild(dotIcon);
     }
     if (
       computerGameBoard[cellRow][cellColumn] !== null &&
       typeof computerGameBoard[cellRow][cellColumn] === "object" &&
       computerGameBoard[cellRow][cellColumn].isSunk()
     ) {
-      // Make background dark red and add ship with X mark SVG
       cell.style.cssText = "background-color: darkred";
+      cell.innerHTML = "";
+      const explosionIcon = new Image();
+      explosionIcon.src = x;
+      explosionIcon.classList.add("icons");
+      cell.appendChild(explosionIcon);
     }
   }
 }
