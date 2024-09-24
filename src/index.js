@@ -8,6 +8,7 @@ import {
   populateRandomShips,
   registerComputerPlay,
   registerHumanPlay,
+  resetGameBoards,
 } from "./displayMethods";
 import winner from "./icons/winner.svg";
 
@@ -43,9 +44,7 @@ for (let i = 0; i < computer.gameBoard.board.length; i++) {
 
 populateHumanBoard(human.gameBoard);
 displayPlayerBoard(humanBoard, human.gameBoard.board);
-
 populateComputerBoard(computer.gameBoard);
-displayComputerBoard(computerBoard, computer.gameBoard.board);
 
 const playerVictory = document.querySelector("#player-victory");
 const computerVictory = document.querySelector("#computer-victory");
@@ -54,10 +53,9 @@ playerVictory.src = winner;
 
 const randomize = document.getElementById("randomize");
 randomize.addEventListener("click", () => {
-  populateRandomShips(human.gameBoard);
+  populateRandomShips(human.gameBoard, human);
   displayPlayerBoard(humanBoard, human.gameBoard.board);
-  populateRandomShips(computer.gameBoard);
-  displayComputerBoard(computerBoard, computer.gameBoard.board);
+  populateRandomShips(computer.gameBoard, computer);
 });
 
 const home = document.querySelector(".home");
@@ -67,9 +65,18 @@ const computerSide = document.querySelector(".computer-side");
 playBtn.addEventListener("click", () => {
   home.style.cssText = "display: none;";
   computerSide.style.cssText = "display: grid;";
+  displayComputerBoard(computerBoard, computer.gameBoard.board);
 });
 
 const playAgain = document.getElementById("play-again");
+playAgain.addEventListener("click", () => {
+  playAgain.style.cssText = "visibility: hidden;";
+  computerSide.style.cssText = "display: none;";
+  home.style.cssText = "display: flex;";
+  playerVictory.style.cssText = "visibility: hidden;";
+  computerVictory.style.cssText = "visibility: hidden;";
+  resetGameBoards(human, humanBoard, computer, computerBoard);
+});
 
 computerBoard.addEventListener("click", (event) => {
   if (event.target.tagName === "DIV") {

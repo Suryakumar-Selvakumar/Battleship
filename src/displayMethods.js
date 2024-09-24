@@ -47,10 +47,11 @@ fireIcon.classList.add("icons");
 
 function displayPlayerBoard(playerGrid, playerGameBoard) {
   for (const cell of playerGrid.children) {
-    cell.style.cssText = "background-color: white;";
     const cellRow = cell.getAttribute("data-row");
     const cellColumn = cell.getAttribute("data-column");
     const cellHit = cell.getAttribute("hit");
+    cell.style.cssText = "background-color: white;";
+    cell.innerHTML = "";
     if (
       typeof playerGameBoard[cellRow][cellColumn] === "object" &&
       playerGameBoard[cellRow][cellColumn] !== null
@@ -115,6 +116,7 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
     const cellColumn = cell.getAttribute("data-column");
     const cellHit = cell.getAttribute("hit");
     cell.style.cssText = "background-color: white;";
+    cell.innerHTML = "";
     if (
       typeof computerGameBoard[cellRow][cellColumn] === "object" &&
       computerGameBoard[cellRow][cellColumn] !== null &&
@@ -215,14 +217,16 @@ function generateRandomShip(playerGameBoardObj, shipLength) {
   }
 }
 
-function populateRandomShips(playerGameBoardObj) {
+function populateRandomShips(playerGameBoardObj, player) {
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
       playerGameBoardObj.board[i][j] = null;
+      player.visitedArr[i][j] = false;
     }
   }
 
   playerGameBoardObj.shipCoordsArr = [];
+  playerGameBoardObj.shipsFoundArr = [];
 
   generateRandomShip(playerGameBoardObj, 4);
   generateRandomShip(playerGameBoardObj, 3);
@@ -236,6 +240,36 @@ function populateRandomShips(playerGameBoardObj) {
   generateRandomShip(playerGameBoardObj, 1);
 }
 
+function resetGameBoards(human, humanBoard, computer, computerBoard) {
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      human.gameBoard.board[i][j] = null;
+      computer.gameBoard.board[i][j] = null;
+      human.visitedArr[i][j] = false;
+      computer.visitedArr[i][j] = false;
+    }
+  }
+
+  for (const cell of humanBoard.children) {
+    cell.setAttribute("chosen", false);
+    cell.setAttribute("hit", false);
+  }
+
+  for (const cell of computerBoard.children) {
+    cell.setAttribute("chosen", false);
+    cell.setAttribute("hit", false);
+  }
+
+  human.gameBoard.shipCoordsArr = [];
+  computer.gameBoard.shipCoordsArr = [];
+  human.gameBoard.shipsFoundArr = [];
+  computer.gameBoard.shipsFoundArr = [];
+
+  populateHumanBoard(human.gameBoard);
+  populateComputerBoard(computer.gameBoard);
+  displayPlayerBoard(humanBoard, human.gameBoard.board);
+}
+
 export {
   displayPlayerBoard,
   populateHumanBoard,
@@ -244,4 +278,5 @@ export {
   registerHumanPlay,
   registerComputerPlay,
   populateRandomShips,
+  resetGameBoards,
 };
