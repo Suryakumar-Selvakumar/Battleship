@@ -38,6 +38,20 @@ body {
   padding-top: 2rem;
 }
 
+#play-again {
+  visibility: hidden;
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(14, 168, 0);
+  border: none;
+  width: 350px;
+  height: 70px;
+  color: white;
+  font-family: myFontTitle;
+  font-size: 3rem;
+  padding-top: 0.5rem;
+}
+
 .logo {
   font-family: myFontTitle;
   font-size: 7rem;
@@ -49,6 +63,7 @@ body {
   );
 
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
@@ -62,7 +77,7 @@ body {
 .player-side {
   grid-area: player-side;
   display: grid;
-  grid-template-rows: 1fr min-content 1fr 1fr;
+  grid-template-rows: 100px min-content 1fr 1fr;
   grid-template-areas:
     "."
     "player-grid"
@@ -84,17 +99,19 @@ body {
 .computer-icon {
   align-self: start;
   padding-top: 1rem;
+  height: 100px;
+  width: 100px;
 }
 
 .player-icon {
   grid-area: player-icon;
-  padding-right: 15rem;
+  padding-right: 16rem;
 }
 
 .player-panel {
   grid-area: player-panel;
-  align-self: flex-start;
-  padding-right: 14rem;
+  padding-right: 16rem;
+  place-self: start end;
 }
 
 .grid-cell:nth-child(10n) {
@@ -113,23 +130,54 @@ body {
   height: 60px;
 }
 
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+  justify-content: start;
+  padding-left: 15rem;
+  padding-top: 20rem;
+}
+
 #randomize {
-  padding: 0.5rem 1.5rem;
-  font-size: 1.25rem;
   outline: none;
   cursor: pointer;
+  background-image: url("./icons/random.svg");
+  background-size: 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(240, 200, 0);
+  border: none;
+  width: 300px;
+  height: 90px;
+}
+
+#play {
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(14, 168, 0);
+  border: none;
+  width: 300px;
+  height: 90px;
+  color: white;
+  font-family: myFontTitle;
+  font-size: 3rem;
+  padding-top: 0.5rem;
 }
 
 .computer-side {
   grid-area: computer-side;
   display: grid;
-  grid-template-rows: 1fr min-content 1fr 1fr;
+  grid-template-rows: 100px min-content 1fr 1fr;
   grid-template-areas:
     "."
     "computer-grid"
-    "computer-icon" "computer-panel";
+    "computer-icon"
+    "computer-panel";
   place-items: start;
   padding-left: 5vw;
+  display: none;
 }
 
 .computer-grid {
@@ -148,7 +196,7 @@ body {
 .computer-icon {
   grid-area: computer-icon;
   place-self: start;
-  padding-left: 14rem;
+  padding-left: 16rem;
 }
 
 .computer-panel {
@@ -158,4 +206,11 @@ body {
 .icons {
   width: 35px;
   height: 35px;
+}
+
+#player-victory,
+#computer-victory {
+  visibility: hidden;
+  width: 100px;
+  height: 100px;
 }

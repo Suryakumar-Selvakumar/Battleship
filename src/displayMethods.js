@@ -9,6 +9,12 @@ import boat from "./icons/boat.svg";
 import human from "./icons/human.svg";
 import robot from "./icons/robot.svg";
 
+const humanIcon = document.querySelector(".player-icon");
+humanIcon.src = human;
+
+const computerIcon = document.querySelector(".computer-icon");
+computerIcon.src = robot;
+
 function populateHumanBoard(playerGameBoard) {
   playerGameBoard.placeShip(4, [5, 5], "top");
   playerGameBoard.placeShip(3, [0, 9], "left");

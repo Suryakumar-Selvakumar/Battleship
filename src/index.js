@@ -9,6 +9,7 @@ import {
   registerComputerPlay,
   registerHumanPlay,
 } from "./displayMethods";
+import winner from "./icons/winner.svg";
 
 const human = new Player("human");
 const computer = new Player("computer");
@@ -46,7 +47,10 @@ displayPlayerBoard(humanBoard, human.gameBoard.board);
 populateComputerBoard(computer.gameBoard);
 displayComputerBoard(computerBoard, computer.gameBoard.board);
 
-const displayPara = document.querySelector("#display-para");
+const playerVictory = document.querySelector("#player-victory");
+const computerVictory = document.querySelector("#computer-victory");
+computerVictory.src = winner;
+playerVictory.src = winner;
 
 const randomize = document.getElementById("randomize");
 randomize.addEventListener("click", () => {
@@ -56,9 +60,19 @@ randomize.addEventListener("click", () => {
   displayComputerBoard(computerBoard, computer.gameBoard.board);
 });
 
+const home = document.querySelector(".home");
+const playBtn = document.getElementById("play");
+const computerSide = document.querySelector(".computer-side");
+
+playBtn.addEventListener("click", () => {
+  home.style.cssText = "display: none;";
+  computerSide.style.cssText = "display: grid;";
+});
+
+const playAgain = document.getElementById("play-again");
+
 computerBoard.addEventListener("click", (event) => {
   if (event.target.tagName === "DIV") {
-    randomize.style.cssText = "display: none;";
     let dataChosen = event.target.getAttribute("chosen");
     if (dataChosen === "false") {
       if (!human.gameBoard.isAllSunk() && !computer.gameBoard.isAllSunk()) {
@@ -75,9 +89,11 @@ computerBoard.addEventListener("click", (event) => {
         registerComputerPlay(human.gameBoard, human.visitedArr, humanBoard);
         displayPlayerBoard(humanBoard, human.gameBoard.board);
         if (human.gameBoard.isAllSunk()) {
-          displayPara.textContent = "Computer wins the game";
+          computerVictory.style.cssText = "visibility: visible;";
+          playAgain.style.cssText = "visibility: visible;";
         } else if (computer.gameBoard.isAllSunk()) {
-          displayPara.textContent = "Player wins the game";
+          playerVictory.style.cssText = "visibility: visible;";
+          playAgain.style.cssText = "visibility: visible;";
         }
       }
     }
