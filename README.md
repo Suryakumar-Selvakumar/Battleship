@@ -1,8 +1,7 @@
-# Weather App: SkySense
+# Battleship
 
-A Weather App built using the following APIs:<br>
-- Visual Crossing's Timeline Weather API
-- Geoapify's geolocation API
-- Google's timeZone API
+The Board Game Battleship built using Test Driven Development (TDD) approach facilitated by Jest
+
+Live Demo - https://suryakumar-selvakumar.github.io/Battleship/
 
 
