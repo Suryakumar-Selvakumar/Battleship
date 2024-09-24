@@ -6,6 +6,8 @@ import x from "./icons/alpha-x.svg";
 import battleship from "./icons/battleship.svg";
 import submarine from "./icons/submarine.svg";
 import boat from "./icons/boat.svg";
+import human from "./icons/human.svg";
+import robot from "./icons/robot.svg";
 
 function populateHumanBoard(playerGameBoard) {
   playerGameBoard.placeShip(4, [5, 5], "top");
@@ -106,6 +108,7 @@ function displayComputerBoard(computerGrid, computerGameBoard) {
     const cellRow = cell.getAttribute("data-row");
     const cellColumn = cell.getAttribute("data-column");
     const cellHit = cell.getAttribute("hit");
+    cell.style.cssText = "background-color: white;";
     if (
       typeof computerGameBoard[cellRow][cellColumn] === "object" &&
       computerGameBoard[cellRow][cellColumn] !== null &&
