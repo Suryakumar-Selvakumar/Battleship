@@ -1,6 +1,7 @@
 import { Player } from "./player";
 import "./style.css";
 import {
+  createGameBoard,
   displayComputerBoard,
   displayPlayerBoard,
   populateComputerBoard,
@@ -12,45 +13,28 @@ import {
 } from "./displayMethods";
 import winner from "./icons/winner.svg";
 
+// Create human and computer players
 const human = new Player("human");
 const computer = new Player("computer");
 
+// Create gameboards on DOM for both
 const humanBoard = document.querySelector(".player-grid");
 const computerBoard = document.querySelector(".computer-grid");
+createGameBoard(human, humanBoard);
+createGameBoard(computer, computerBoard);
 
-for (let i = 0; i < human.gameBoard.board.length; i++) {
-  for (let j = 0; j < human.gameBoard.board[0].length; j++) {
-    const div = document.createElement("div");
-    div.classList.add("grid-cell");
-    div.setAttribute("data-row", i);
-    div.setAttribute("data-column", j);
-    div.setAttribute("hit", false);
-    div.setAttribute("chosen", false);
-    humanBoard.appendChild(div);
-  }
-}
-
-for (let i = 0; i < computer.gameBoard.board.length; i++) {
-  for (let j = 0; j < computer.gameBoard.board[0].length; j++) {
-    const div = document.createElement("div");
-    div.classList.add("grid-cell");
-    div.setAttribute("data-row", i);
-    div.setAttribute("data-column", j);
-    div.setAttribute("hit", false);
-    div.setAttribute("chosen", false);
-    computerBoard.appendChild(div);
-  }
-}
-
+// Populate the gameboards of both using some default coordinates
 populateHumanBoard(human.gameBoard);
 displayPlayerBoard(humanBoard, human.gameBoard.board);
 populateComputerBoard(computer.gameBoard);
 
+// Setting Winner indicator
 const playerVictory = document.querySelector("#player-victory");
 const computerVictory = document.querySelector("#computer-victory");
 computerVictory.src = winner;
 playerVictory.src = winner;
 
+// Randomize button populates gameboards with ships at random coordinates
 const randomize = document.getElementById("randomize");
 randomize.addEventListener("click", () => {
   populateRandomShips(human.gameBoard, human);
@@ -62,12 +46,14 @@ const home = document.querySelector(".home");
 const playBtn = document.getElementById("play");
 const computerSide = document.querySelector(".computer-side");
 
+// Play button to start the game
 playBtn.addEventListener("click", () => {
   home.style.cssText = "display: none;";
   computerSide.style.cssText = "display: grid;";
   displayComputerBoard(computerBoard, computer.gameBoard.board);
 });
 
+// Play Again button to play the game again
 const playAgain = document.getElementById("play-again");
 playAgain.addEventListener("click", () => {
   playAgain.style.cssText = "visibility: hidden;";
@@ -78,6 +64,7 @@ playAgain.addEventListener("click", () => {
   resetGameBoards(human, humanBoard, computer, computerBoard);
 });
 
+// EventListner that drives the whole game
 computerBoard.addEventListener("click", (event) => {
   if (event.target.tagName === "DIV") {
     let dataChosen = event.target.getAttribute("chosen");

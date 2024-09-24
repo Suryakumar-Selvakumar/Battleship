@@ -270,6 +270,20 @@ function resetGameBoards(human, humanBoard, computer, computerBoard) {
   displayPlayerBoard(humanBoard, human.gameBoard.board);
 }
 
+function createGameBoard(player, playerBoard) {
+  for (let i = 0; i < player.gameBoard.board.length; i++) {
+    for (let j = 0; j < player.gameBoard.board[0].length; j++) {
+      const div = document.createElement("div");
+      div.classList.add("grid-cell");
+      div.setAttribute("data-row", i);
+      div.setAttribute("data-column", j);
+      div.setAttribute("hit", false);
+      div.setAttribute("chosen", false);
+      playerBoard.appendChild(div);
+    }
+  }
+}
+
 export {
   displayPlayerBoard,
   populateHumanBoard,
@@ -279,4 +293,5 @@ export {
   registerComputerPlay,
   populateRandomShips,
   resetGameBoards,
+  createGameBoard
 };
