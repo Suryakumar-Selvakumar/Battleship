@@ -190,7 +190,7 @@ body {
 }
 
 .computer-grid > .grid-cell {
-  cursor: pointer;
+  cursor: crosshair;
 }
 
 .computer-icon {
