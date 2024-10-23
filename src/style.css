@@ -45,11 +45,13 @@ body {
   background-color: rgb(14, 168, 0);
   border: none;
   width: 350px;
-  height: 70px;
   color: white;
   font-family: myFontTitle;
   font-size: 3rem;
-  padding-top: 0.5rem;
+  display: grid;
+  place-content: center;
+  padding-top: 1.25rem;
+  padding-bottom: 0.75rem;
 }
 
 .logo {
@@ -159,11 +161,13 @@ body {
   background-color: rgb(14, 168, 0);
   border: none;
   width: 300px;
-  height: 90px;
   color: white;
   font-family: myFontTitle;
   font-size: 3rem;
-  padding-top: 0.5rem;
+  display: grid;
+  place-content: center;
+  padding-top: 1.25rem;
+  padding-bottom: 1rem;
 }
 
 .computer-side {
