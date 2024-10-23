@@ -136,7 +136,7 @@
 
     4.4. How would you switch turns between the players? It’s actually simple. You don’t need to. When you click on a div inside computer grid. It’s eventListener() will fire, which will update its gameboard. Then, inside the same eventListener you would handle computer’s side of the logic where it makes its play. Once its done making it’s play, then you would update the player’s grid and that round will end. That’s it for the game logic, no special round logic, etc.
 
-    4.5. Follow exactly what’s given in TOP instructions.
+    4.5. Follow exactly what’s given below:
 
         4.5.1. Make the player’s moves update the computer’s gameboard.
 
