@@ -49,9 +49,9 @@ body {
   font-family: myFontTitle;
   font-size: 3rem;
   display: grid;
+  min-height: 70px;
   place-content: center;
-  padding-top: 1.25rem;
-  padding-bottom: 0.75rem;
+  place-items: center;
 }
 
 .logo {
@@ -165,9 +165,9 @@ body {
   font-family: myFontTitle;
   font-size: 3rem;
   display: grid;
+  min-height: 90px;
   place-content: center;
-  padding-top: 1.25rem;
-  padding-bottom: 1rem;
+  place-items: center;
 }
 
 .computer-side {
